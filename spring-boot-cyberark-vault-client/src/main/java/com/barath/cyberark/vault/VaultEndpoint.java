@@ -28,12 +28,14 @@ import org.springframework.util.StringUtils;
  * Value object that defines Vault connection coordinates.
  * <p>
  * A {@link VaultEndpoint} defines the hostname, TCP port, the protocol scheme (HTTP or
- * HTTPS), and the context path prefix. The path defaults to {@link #API_VERSION}.
+ * HTTPS), and the context path prefix.
  *
  * @author barath.arivazhagan
  */
 
 public class VaultEndpoint implements Serializable {
+
+	private static final long serialVersionUID = 666226007632874399L;
 
 	public static final String API_VERSION = "v1";
 

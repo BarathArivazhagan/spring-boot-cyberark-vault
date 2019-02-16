@@ -11,7 +11,7 @@ import org.springframework.core.NestedRuntimeException;
 public class TokenException extends NestedRuntimeException {
 
 	/**
-	 * Create a {@code VaultException} with the specified detail message.
+	 * Create a {@code TokenException} with the specified detail message.
 	 *
 	 * @param msg the detail message.
 	 */
@@ -20,7 +20,7 @@ public class TokenException extends NestedRuntimeException {
 	}
 
 	/**
-	 * Create a {@code VaultException} with the specified detail message and nested
+	 * Create a {@code TokenException} with the specified detail message and nested
 	 * exception.
 	 *
 	 * @param msg the detail message.

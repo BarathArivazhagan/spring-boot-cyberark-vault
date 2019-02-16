@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix="spring.vault.credential")
+@ConfigurationProperties(prefix="spring.vault.credential",ignoreUnknownFields=true)
 public class VaultCredential implements Serializable {
 
 	private static final long serialVersionUID = 2081795482457612775L;

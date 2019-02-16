@@ -6,10 +6,10 @@ package com.barath.cyberark.vault;
 public interface ClientAuthentication {
 
 	/**
-	 * Return a {@link VaultToken}. This method can optionally log into Vault to obtain a
-	 * {@link VaultToken token}.
+	 * Return a {@link Token}. This method can optionally log into Vault to obtain a
+	 * {@link Token token}.
 	 *
-	 * @return a {@link VaultToken}.
+	 * @return a {@link Token}.
 	 */
 	Token login() throws TokenException;
 }
