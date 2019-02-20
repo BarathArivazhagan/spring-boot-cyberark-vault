@@ -1,6 +1,7 @@
-package com.barath.cyberark.vault;
+package com.barath.cyberark.vault.authentication;
 
-
+import com.barath.cyberark.vault.Token;
+import com.barath.cyberark.vault.exception.TokenException;
 
 @FunctionalInterface
 public interface ClientAuthentication {

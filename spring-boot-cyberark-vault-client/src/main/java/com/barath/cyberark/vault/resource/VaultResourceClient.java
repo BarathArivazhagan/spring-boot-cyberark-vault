@@ -1,4 +1,4 @@
-package com.barath.cyberark.vault;
+package com.barath.cyberark.vault.resource;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.barath.cyberark.vault.Token;
+import com.barath.cyberark.vault.VaultCredential;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

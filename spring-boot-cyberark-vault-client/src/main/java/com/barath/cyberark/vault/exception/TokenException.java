@@ -1,4 +1,4 @@
-package com.barath.cyberark.vault;
+package com.barath.cyberark.vault.exception;
 
 import org.springframework.core.NestedRuntimeException;
 

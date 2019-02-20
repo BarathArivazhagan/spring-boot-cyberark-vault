@@ -1,4 +1,4 @@
-package com.barath.cyberark.vault;
+package com.barath.cyberark.vault.configuration;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

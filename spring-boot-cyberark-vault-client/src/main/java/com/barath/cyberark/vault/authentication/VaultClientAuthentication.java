@@ -1,6 +1,10 @@
-package com.barath.cyberark.vault;
+package com.barath.cyberark.vault.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.barath.cyberark.vault.Token;
+import com.barath.cyberark.vault.exception.TokenException;
+import com.barath.cyberark.vault.resource.VaultResourceClient;
 
 
 public class VaultClientAuthentication implements ClientAuthentication {

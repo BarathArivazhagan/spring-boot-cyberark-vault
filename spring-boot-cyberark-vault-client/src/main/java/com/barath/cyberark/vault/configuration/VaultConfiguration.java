@@ -1,4 +1,4 @@
-package com.barath.cyberark.vault;
+package com.barath.cyberark.vault.configuration;
 
 import java.net.URI;
 
@@ -7,6 +7,12 @@ import javax.annotation.PostConstruct;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.barath.cyberark.vault.VaultCredential;
+import com.barath.cyberark.vault.VaultEndpoint;
+import com.barath.cyberark.vault.authentication.ClientAuthentication;
+import com.barath.cyberark.vault.authentication.VaultClientAuthentication;
+import com.barath.cyberark.vault.resource.VaultResourceClient;
 
 @Configuration
 public class VaultConfiguration{
