@@ -18,7 +18,6 @@ import com.barath.cyberark.vault.resource.VaultResourceClient;
 public class VaultConfiguration{
 
 	private final ConfigurableApplicationContext context;
-
 	
 
 	public VaultConfiguration(ConfigurableApplicationContext context) {
