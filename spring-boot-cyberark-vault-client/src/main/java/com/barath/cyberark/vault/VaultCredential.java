@@ -23,9 +23,9 @@ public class VaultCredential implements Serializable {
 	private String username;
 	
 	@NotNull
-	private String password;
-	
-	private String application;
+	private String password;	
+
+	private String variableIds;
 
 	public String getUrl() {
 		return url;
@@ -59,14 +59,15 @@ public class VaultCredential implements Serializable {
 		this.password = password;
 	}
 
-	public String getApplication() {
-		return application;
+	public String getVariableIds() {
+		return variableIds;
 	}
 
-	public void setApplication(String application) {
-		this.application = application;
+	public void setVariableIds(String variableIds) {
+		this.variableIds = variableIds;
 	}
-	
+
+		
 	
 	
 

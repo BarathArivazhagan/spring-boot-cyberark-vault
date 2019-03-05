@@ -22,8 +22,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class VaultResourceClient {
 	
+	public VaultCredential getVaultCredential() {
+		return vaultCredential;
+	}
+
+
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-	private static final RestTemplate restTemplate = new RestTemplate();
+	private final RestTemplate restTemplate = new RestTemplate();
 	private ObjectMapper mapper = new ObjectMapper();
 	private final VaultCredential vaultCredential;
 	private static final String SECRETS_URI="/secrets";
@@ -45,12 +51,11 @@ public class VaultResourceClient {
 		uriVariables.put("user", vaultCredential.getUsername());
 		ResponseEntity<String> responseEntity=this.restTemplate.postForEntity(getTokenUri(vaultCredential.getUrl()), vaultCredential.getPassword(), String.class, uriVariables);
 		if(responseEntity.getStatusCode().is2xxSuccessful()) {
-			System.out.println("success");
+			logger.info("successful in retriveing the cyberark conjur token {}",responseEntity.getStatusCodeValue());
 		}else {
-			System.out.println("fail");
+			logger.error("failure in retriveing the cyberark conjur token");
 			return null;
-		}
-		
+		}		
 		return new Token(responseEntity.getBody());
 		
 	}
@@ -62,20 +67,12 @@ public class VaultResourceClient {
 										.fromHttpUrl(vaultUri)
 										.path(TOKEN_URI);
 		
-		System.out.println("token uri formed "+builder.toString());
+		if(logger.isInfoEnabled()) {
+			logger.info("token uri formed {}",builder.toString());
+		}
 		return builder.encode().toUriString();						
 	}
 	
-	public String getSecretUri(String vaultUri, String applicationName) {
-		
-		UriComponentsBuilder builder = UriComponentsBuilder
-										.fromHttpUrl(vaultUri)
-										.path(SECRETS_URI)
-										.queryParam("variable_ids", applicationName);
-		
-		System.out.println("secret uri formed "+builder.toUriString());
-		return builder.encode().toUriString();						
-	}
 	
 	public Map<String,Object> getSecrets(String appName){
 		
@@ -83,22 +80,21 @@ public class VaultResourceClient {
 		Token token =this.getToken();
 		headers.add("Authorization", token.toHeader());
 		HttpEntity<Object> httpEntity= new HttpEntity<>(headers);
-		String url =this.getSecretUri(vaultCredential.getUrl(),vaultCredential.getApplication());
-		System.out.println("SECRET URI ="+url);
+		String url =this.getSecretUri(vaultCredential.getUrl(),vaultCredential.getAccount(),vaultCredential.getVariableIds());
+		logger.info("SECRET URI = {}",url);
 		ResponseEntity<String> responseEntity=restTemplate.exchange(url,
 				HttpMethod.GET,
 				httpEntity,
 				String.class);
 		if(responseEntity.getStatusCode().is2xxSuccessful()) {
-			System.out.println("secretes success");
+			logger.info("secrets success");
 			try {
 				return mapper.readValue(responseEntity.getBody(), new TypeReference<Map<String, String>>(){});
 			} catch (IOException e) {
-				
-				e.printStackTrace();
+				logger.error("exception in retrieving secrets {}",e.getMessage());
 			}
 		}else {
-			System.out.println("secretes failed");
+			logger.error("secrets failed");
 			return null;
 		}
 		return null;
@@ -107,6 +103,27 @@ public class VaultResourceClient {
 	
 	
 
+	public String getSecretUri(String vaultUri, String account,String variableIds) {
+		
+		if(logger.isInfoEnabled()) {
+			logger.info("variables to be retrieved {}",variableIds);
+		}
+		StringBuilder idBuilder = new StringBuilder();
+		for(String variable : variableIds.split(",")) {
+			idBuilder.append(account+":variable:"+variable+",");
+		}
+		UriComponentsBuilder builder = UriComponentsBuilder
+										.fromHttpUrl(vaultUri)
+										.path(SECRETS_URI)
+										.queryParam("variable_ids", idBuilder.toString());
+		
+		if(logger.isInfoEnabled()) {
+			logger.info("secret uri formed {}",builder.toUriString());
+		}
+		return builder.encode().toUriString();						
+	}
+	
+	
 	
 	
 

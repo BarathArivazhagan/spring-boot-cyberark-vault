@@ -11,7 +11,13 @@ import org.joda.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
+/**
+ * Token class containing the fields and payload as part of authentication 
+ * and having its own validitiy period.
+ * 
+ * @author barath.arivazhagan
+ *
+ */
 public class Token {
 	
 	private static final ObjectMapper mapper = new ObjectMapper();
@@ -151,8 +157,7 @@ public class Token {
         String header = new StringBuilder()
                 .append("Token token=\"")
                 .append(toBase64())
-                .append("\"").toString();
-        System.out.println("header "+header);
+                .append("\"").toString();       
         return header;
 	}
 }

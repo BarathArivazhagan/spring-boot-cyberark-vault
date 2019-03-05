@@ -3,19 +3,33 @@ package com.barath.app;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.barath.app.Application.User;
 import com.barath.cyberark.vault.configuration.EnableVaultAutoConfiguration;
+import com.zaxxer.hikari.HikariDataSource;
 
 
 @SpringBootApplication
-@EnableVaultAutoConfiguration
+//@EnableVaultAutoConfiguration
 @RestController
 public class Application {
 
@@ -43,7 +57,7 @@ public class Application {
 
 
 	@Service
-	private class UserService{
+	protected static class UserService{
 		
 		private final UserRepository userRepository;
 
@@ -70,15 +84,16 @@ public class Application {
 		
 	}
 	
-	private interface UserRepository extends JpaRepository<User, Long> {
-		
-	}
 	
-	
-	private class User{
+	@Entity
+	@Table
+	protected static class User{
 		
+		@Id
+		@Column
 		private Long userId;
 		
+		@Column
 		private String userName;
 
 		public Long getUserId() {
@@ -119,3 +134,40 @@ public class Application {
 	}
 
 }
+
+interface UserRepository extends JpaRepository<User, Long> {
+	
+}
+
+//@Configuration
+class DataSourceConfiguration{
+	
+		@Value("${mysql-password}")
+		private String userName;
+		
+		@Value("${mysql-username}")
+		private String password;
+	
+		@Bean
+		@ConfigurationProperties(prefix = "spring.datasource.hikari")
+		public HikariDataSource dataSource(DataSourceProperties properties) {
+			properties.setUsername(userName);
+			properties.setPassword(password);
+			HikariDataSource dataSource = createDataSource(properties,
+					HikariDataSource.class);
+			if (StringUtils.hasText(properties.getName())) {
+				dataSource.setPoolName(properties.getName());
+			}
+			return dataSource;
+		}
+		
+		@SuppressWarnings("unchecked")
+		protected static <T> T createDataSource(DataSourceProperties properties,
+				Class<? extends DataSource> type) {
+			return (T) properties.initializeDataSourceBuilder().type(type).build();
+		}
+
+
+	
+}
+

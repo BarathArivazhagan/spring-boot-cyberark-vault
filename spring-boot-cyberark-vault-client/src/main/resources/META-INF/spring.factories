@@ -1,0 +1,2 @@
+org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+com.barath.cyberark.vault.configuration.VaultAutoConfiguration

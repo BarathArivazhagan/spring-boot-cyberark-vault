@@ -175,7 +175,6 @@ public class VaultEndpoint implements Serializable {
 
 	/**
 	 * @return the context path prefix.
-	 * @since 2.1
 	 */
 	public String getPath() {
 		return path;
@@ -184,7 +183,6 @@ public class VaultEndpoint implements Serializable {
 	/**
 	 * @param path context path prefix. Must not be {@literal null} or empty and must not
 	 * start with a leading slash.
-	 * @since 2.1
 	 */
 	public void setPath(String path) {
 

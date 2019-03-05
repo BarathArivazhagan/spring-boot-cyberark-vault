@@ -1,55 +1,47 @@
 package com.barath.cyberark.vault.configuration;
 
-import java.net.URI;
-
-import javax.annotation.PostConstruct;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MapPropertySource;
+import org.springframework.core.env.MutablePropertySources;
 
-import com.barath.cyberark.vault.VaultCredential;
-import com.barath.cyberark.vault.VaultEndpoint;
-import com.barath.cyberark.vault.authentication.ClientAuthentication;
-import com.barath.cyberark.vault.authentication.VaultClientAuthentication;
 import com.barath.cyberark.vault.resource.VaultResourceClient;
 
 @Configuration
 public class VaultConfiguration{
 
 	private final ConfigurableApplicationContext context;
+	private VaultResourceClient vaultResourceClient;
+	
 	
 
-	public VaultConfiguration(ConfigurableApplicationContext context) {
+	public VaultConfiguration(VaultResourceClient vaultResourceClient,ConfigurableApplicationContext context) {
 		super();
 		this.context=context;
-
+		this.vaultResourceClient=vaultResourceClient;
+		init();
 	}
 	
-	@Bean
-	public VaultCredential credential() {
-		return new VaultCredential();
-	}
 
-    @Bean
-	public VaultEndpoint vaultEndpoint(VaultCredential vaultCredential) {		
-		return VaultEndpoint.from(URI.create(vaultCredential.getUrl()));
-	}
     
-    @Bean
-	public ClientAuthentication clientAuthentication() {		
-		return new VaultClientAuthentication();
-	}
+    public void init() {    	
+     Map<String,Object> vaultMap=	this.vaultResourceClient.getSecrets(this.vaultResourceClient.getVaultCredential().getVariableIds());
+     ConfigurableEnvironment env = context.getEnvironment();
+     MutablePropertySources sources = env.getPropertySources(); 
+     // remove account name & variable keywords from the properties
+     vaultMap=vaultMap.entrySet()
+		.stream()
+		.collect(Collectors.toMap( e -> {			
+			int length = e.getKey().split(":").length;
+			return e.getKey().split(":")[length-1];
+		},Map.Entry::getValue));
+     MapPropertySource vaultPropertySource= new MapPropertySource("vaultClient",vaultMap);
+     sources.addFirst(vaultPropertySource);
     
-    @Bean
-    public VaultResourceClient vaultResourceClient(VaultCredential vaultCredential) {
-    	return new VaultResourceClient(vaultCredential);
-    }
-    
-    @PostConstruct
-    public void init() {
-    	System.out.println("initializing secrets ");
-    	this.vaultResourceClient(credential()).getSecrets(credential().getApplication());
     }
 
 	
