@@ -37,3 +37,32 @@ $ mvn spring-boot:run
 ```
 
 - Verify spring boot application connected to mysql database
+
+## Configuration Guide
+
+- Build cyberark client 
+
+```
+$ cd spring-boot-cyberark-vault-client
+$ mvn clean install -DskipTests
+```
+
+- Add cyberark client as dependency in pom.xml 
+
+```
+<dependency>
+			<groupId>com.barath.cyberark.vault</groupId>
+			<artifactId>spring-boot-cyberark-vault-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+</dependency>
+```
+
+- Configure below properties in bootstrap.properties or bootstrap.yml 
+
+```
+spring.vault.credential.account=<<ACCOUNT>>
+spring.vault.credential.url=<<CONJUR APPLIANCE URL>>
+spring.vault.credential.password=<<API KEY>>
+spring.vault.credential.username=<<USERNAME>>
+spring.vault.credential.variable-ids=<<LIST OF VARIABLE IDS>>
+```
