@@ -29,14 +29,4 @@ $ conjur authn login -u admin
 Please enter admin\'s password (it will not be echoed):
 ```
 
-## Follow below instructions to load the policy
-
-```
-$ docker-compose exec client bash
-$ conjur init -u conjur -a demo-account
-$ conjur authn login -u admin
-$ conjur policy load root quickstart.yml
-$ conjur list
-$ conjur variable values add mysql-password  root
-```
 
