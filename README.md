@@ -1,22 +1,24 @@
-# spring-boot-cyberark-vault
+# Spring-Boot-Cyberark-Vault
 
 Java client integrated with cyberark vault management providing spring boot bootstrap features.
 
-How to setup CyberArk Conjur :
+# Pre-requsites:
 
-[Conjur Setup](https://www.conjur.org/get-started/install-conjur.html)
-
-
-   - conjur policy load root quickstart.yml
-   - conjur list
-   - conjur variable values add mysql-password  root
-
-[CyberArk Rest API](https://documenter.getpostman.com/view/998920/cyberark-rest-api-v10-public/2QrXnF)
+- [Cyberark Conjur Setup](https://github.com/BarathArivazhagan/spring-boot-cyberark-vault/blob/master/docs/cyberark_setup.md)
 
 
-Features:
+# Features:
 
 - Bootstrap configuration with spring boot
 - Vault secrets are injected into spring environment
 
+
+# References:
+
+[CyberArk Rest API](https://documenter.getpostman.com/view/998920/cyberark-rest-api-v10-public/2QrXnF)
+
+
+# Action Items:
+
+- Caching secrets based on store
 

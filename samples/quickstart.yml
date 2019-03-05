@@ -1,0 +1,8 @@
+- !variable
+  id: mysql-username
+  annotations:
+    app: demo-app
+- !variable
+  id: mysql-password
+  annotations:
+    app: demo-app
