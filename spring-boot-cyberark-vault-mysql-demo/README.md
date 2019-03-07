@@ -24,10 +24,10 @@ $ conjur variable values add mysql-password  root
 $ mvn clean package
 ```
 
-- Run MYSQL database 
+- Run MYSQL database as docker container (Optional if mysql already running on host)
 
 ```
-$docker run --name mysql-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root  -d mysql:latest
+$ docker run --name mysql-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root  -d mysql:latest
 ```
 
 - Run the demo application
@@ -50,11 +50,11 @@ $ mvn clean install -DskipTests
 - Add cyberark client as dependency in pom.xml 
 
 ```
-<dependency>
+		<dependency>
 			<groupId>com.barath.cyberark.vault</groupId>
 			<artifactId>spring-boot-cyberark-vault-client</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-</dependency>
+		</dependency>
 ```
 
 - Configure below properties in bootstrap.properties or bootstrap.yml 
