@@ -2,7 +2,7 @@
 
 Java client integrated with cyberark vault management providing spring boot bootstrap features.
 
-### Pre-requsites:
+### Pre-requisites:
 
 - [Cyberark Conjur Setup](https://github.com/BarathArivazhagan/spring-boot-cyberark-vault/blob/master/docs/cyberark_setup.md)
 
