@@ -22,7 +22,4 @@ Java client integrated with cyberark vault management providing spring boot boot
 [CyberArk Rest API](https://documenter.getpostman.com/view/998920/cyberark-rest-api-v10-public/2QrXnF)
 
 
-### Action Items:
-
-- Caching secrets based on store
 
